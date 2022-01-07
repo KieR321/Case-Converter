@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Case Conventer</title>
+
+    <style>
+        textarea {
+            min-width: 700px;
+            min-height: 200px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="title">Case Converter</div>
+<textarea></textarea>
+<br>
+<button id="upper-case">upper-case</button>
+<button id="lower-case">lower-case</button>
+<button id="proper-case">proper-case</button>
+<button id="sentence-case">sentence-case</button>
+<button id="save-text-file">save text file</button>
+
+<script>
+    const btnUpperCase = document.getElementById("upper-case");
+    const btnLowerCase = document.getElementById("lower-case");
+    const btnProperCase = document.getElementById("proper-case");
+    const  btnSentenceCase = document.getElementById("sentence-case");
+    const  btnSaveTextFile = document.getElementById("save-text-file");
+
+    let text = document.querySelector("textarea");
+
+
+    btnUpperCase.addEventListener('click', function() {
+        text.value = text.value.toUpperCase();
+    })
+
+    btnLowerCase.addEventListener('click', function() {
+        text.value = text.value.toLowerCase();
+    })
+
+    btnProperCase.addEventListener('click', function() {
+        text.value = text.value.toLowerCase();
+        words = text.value.split(" ");
+
+        words.forEach((word, index) => {
+            words[index] = word.substring(0,1).toUpperCase() + word.substring(1);
+            text.value = words.join(" ");
+        });
+    })
+
+    btnSentenceCase.addEventListener('click', function() {
+        text.value = text.value.toLowerCase();
+        sentences = text.value.split(". ");
+
+        sentences.forEach((sentence, index) => {
+            sentences[index] = sentence.substring(0,1).toUpperCase() + sentence.substring(1);
+            text.value = sentences.join(". ");
+        });
+    })
+
+    btnSaveTextFile.addEventListener('click', function() {
+        download("Converter text.txt", text.value);
+    })
+
+    function download(filename, text) {
+        let element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }
+</script>
+</body>
+</html>
